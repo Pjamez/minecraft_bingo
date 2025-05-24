@@ -145,23 +145,13 @@
     const shuffledItems = shuffle([...bingoItems]);
     const grid = document.getElementById("bingoGrid");
 
-    // Only load sounds supported by browser (.ogg check)
-    const soundUrls = [
-      'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/creeper/primed.ogg',
-      'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/zombie/hurt.ogg',
-      'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/block/anvil/use.ogg',
-      'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/ender_dragon/growl.ogg'
+    // Preload Minecraft-themed sounds from free open CDN
+    const minecraftSounds = [
+      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/creeper/primed.ogg'),
+      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/zombie/hurt.ogg'),
+      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/block/anvil/use.ogg'),
+      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/ender_dragon/growl.ogg')
     ];
-
-    const minecraftSounds = [];
-
-    soundUrls.forEach(url => {
-      const audio = new Audio();
-      if (audio.canPlayType('audio/ogg')) {
-        audio.src = url;
-        minecraftSounds.push(audio);
-      }
-    });
 
     shuffledItems.forEach(text => {
       const cell = document.createElement("div");
@@ -170,11 +160,9 @@
 
       cell.onclick = () => {
         cell.classList.toggle("marked");
-        if (minecraftSounds.length) {
-          const sound = minecraftSounds[Math.floor(Math.random() * minecraftSounds.length)];
-          sound.currentTime = 0;
-          sound.play().catch(e => console.warn("Audio play failed:", e));
-        }
+        const sound = minecraftSounds[Math.floor(Math.random() * minecraftSounds.length)];
+        sound.currentTime = 0;
+        sound.play().catch(e => console.warn("Audio play failed:", e));
       };
 
       grid.appendChild(cell);
