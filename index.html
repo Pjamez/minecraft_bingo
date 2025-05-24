@@ -17,7 +17,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: black;
     }
 
     #meme-background {
@@ -49,9 +48,6 @@
     #game-container {
       text-align: center;
       z-index: 1;
-      width: 100%;
-      max-width: 1200px;
-      padding: 20px;
     }
 
     h1 {
@@ -98,7 +94,6 @@
       box-shadow: 0 0 10px #ff00ff77;
       text-shadow: 1.5px 1.5px 0 black, -1.5px -1.5px 0 black;
       word-break: break-word;
-      user-select: none;
     }
 
     .cell:hover {
@@ -145,12 +140,12 @@
     const shuffledItems = shuffle([...bingoItems]);
     const grid = document.getElementById("bingoGrid");
 
-    // Preload Minecraft-themed sounds from free open CDN
+    // Preload audio objects
     const minecraftSounds = [
-      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/creeper/primed.ogg'),
-      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/zombie/hurt.ogg'),
-      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/block/anvil/use.ogg'),
-      new Audio('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@master/assets/sounds/entity/ender_dragon/growl.ogg')
+      new Audio('https://assets.mixkit.co/sfx/preview/mixkit-video-game-casino-notification-2113.mp3'),
+      new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.wav'),
+      new Audio('https://assets.mixkit.co/sfx/preview/mixkit-video-game-retro-explosion-1691.wav'),
+      new Audio('https://assets.mixkit.co/sfx/preview/mixkit-game-ball-tap-2072.wav')
     ];
 
     shuffledItems.forEach(text => {
@@ -161,7 +156,7 @@
       cell.onclick = () => {
         cell.classList.toggle("marked");
         const sound = minecraftSounds[Math.floor(Math.random() * minecraftSounds.length)];
-        sound.currentTime = 0;
+        sound.currentTime = 0; // rewind to start
         sound.play().catch(e => console.warn("Audio play failed:", e));
       };
 
